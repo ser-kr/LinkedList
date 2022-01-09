@@ -1,5 +1,9 @@
 import UIKit
 import Foundation
+enum ListError: Error {
+    case syntaxError
+    case otherError
+}
 
 public class Node<T> {
     var value: T
@@ -9,7 +13,7 @@ public class Node<T> {
     }
 }
 
-class SingleLinkedList<T> {
+class SingleLinkedList<T>  {
     var head: Node<T>?
     public var isEmpty: Bool {
         return head == nil
@@ -19,21 +23,24 @@ class SingleLinkedList<T> {
     }
     
     // append: (T) -> void
-    public func append(value: T) {
+    public func append(value: T) throws {
         let newNode = Node(value: value)
         if var temp = head {
             while temp.next != nil {
                 temp = temp.next!
+                throw ListError.syntaxError
             }
             temp.next = newNode
         } else {
             head = newNode
+            throw ListError.otherError
         }
     }
     
     // emty: () -> Boolean
-    func empty() -> Bool {
+    func empty() throws -> Bool {
         return head == nil
+        
     }
     // count: () -> Int
     func count() -> Int {
@@ -50,7 +57,7 @@ class SingleLinkedList<T> {
     }
     
     // first: () -> T
-    func firstE() -> Node<T>? {
+    func firstElement() -> Node<T>? {
         return first
     }
     // index: (Int) -> T
@@ -108,10 +115,18 @@ class SingleLinkedList<T> {
         let nextToNextNode = temp?.next?.next
         temp?.next = nextToNextNode
     }
+    
     // filter: (T -> Boolean) -> void
-    //func filter(T -> Bool) -> Void {
-        
-   // }
+    public func filter(predicate: (T) -> Bool) -> Void {
+        let result = SingleLinkedList()
+        var node = head
+        while node != nil {
+            if predicate(node!.value) {
+                result.append(value: )
+            }
+            node = node!.next
+        }
+    }
     
     func printList() {
         var current: Node? = head
@@ -124,13 +139,26 @@ class SingleLinkedList<T> {
 }
 
 var list1 = SingleLinkedList<String>()
-list1.append(value: "Test11")
-list1.append(value: "Test2")
 
-list1.append(value: "Test3")
+do { try list1.append(value: "Test11")
+} catch {
+    print(ListError.syntaxError)
+}
+
+try list1.append(value: "Test2")
+
+try list1.append(value: "Test3")
 list1.printList()
 
-list1.empty()
-list1.firstE()
+do {
+   try list1.empty()
+} catch {
+    print(ListError.otherError)
+}
+list1.firstElement()
 list1.count()
 list1.index(position: 2)
+
+list1.filter { test in
+    test.hasPrefix("s")
+}
