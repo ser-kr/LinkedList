@@ -23,17 +23,17 @@ class SingleLinkedList<T>  {
     }
     
     // append: (T) -> void
-    public func append(value: T) throws {
+    public func append(value: T) {
         let newNode = Node(value: value)
         if var temp = head {
             while temp.next != nil {
                 temp = temp.next!
-                throw ListError.syntaxError
+                
             }
             temp.next = newNode
         } else {
             head = newNode
-            throw ListError.otherError
+            
         }
     }
     
@@ -140,11 +140,11 @@ class SingleLinkedList<T>  {
 
 var list1 = SingleLinkedList<String>()
 
-try? list1.append(value: "Test11")
+list1.append(value: "Test11")
 
-try? list1.append(value: "Test2")
+list1.append(value: "Test2")
 
-try? list1.append(value: "Test3")
+list1.append(value: "Test3")
 list1.printList()
 
 do {
