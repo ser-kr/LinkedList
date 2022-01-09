@@ -140,14 +140,11 @@ class SingleLinkedList<T>  {
 
 var list1 = SingleLinkedList<String>()
 
-do { try list1.append(value: "Test11")
-} catch {
-    print(ListError.syntaxError)
-}
+try? list1.append(value: "Test11")
 
-try list1.append(value: "Test2")
+try? list1.append(value: "Test2")
 
-try list1.append(value: "Test3")
+try? list1.append(value: "Test3")
 list1.printList()
 
 do {
@@ -157,7 +154,7 @@ do {
 }
 list1.firstElement()
 list1.count()
-list1.index(position: 2)
+list1.index(position: 1)
 
 list1.filter { test in
     test.hasPrefix("s")
