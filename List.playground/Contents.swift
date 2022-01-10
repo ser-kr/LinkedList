@@ -23,12 +23,11 @@ class SingleLinkedList<T>  {
     }
     
     // append: (T) -> void
-    public func append(value: T) {
+    public func append(value: T) throws {
         let newNode = Node(value: value)
         if var temp = head {
             while temp.next != nil {
                 temp = temp.next!
-                
             }
             temp.next = newNode
         } else {
@@ -57,7 +56,7 @@ class SingleLinkedList<T>  {
     }
     
     // first: () -> T
-    func firstElement() -> Node<T>? {
+    func firstElement() throws -> Node<T>? {
         return first
     }
     // index: (Int) -> T
@@ -139,12 +138,14 @@ class SingleLinkedList<T>  {
 }
 
 var list1 = SingleLinkedList<String>()
+   
+try? list1.append(value: "Test11")
 
-list1.append(value: "Test11")
 
-list1.append(value: "Test2")
+try? list1.append(value: "Test2")
 
-list1.append(value: "Test3")
+try list1.append(value: "Test3")
+
 list1.printList()
 
 do {
@@ -152,7 +153,11 @@ do {
 } catch {
     print(ListError.otherError)
 }
-list1.firstElement()
+do {
+try list1.firstElement()
+} catch {
+    print(ListError.otherError)
+}
 list1.count()
 list1.index(position: 1)
 
